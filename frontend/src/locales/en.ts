@@ -47,6 +47,12 @@ const en = {
     signIn: "LOG IN",
     validationLog: "signup form validation",
   },
+  notFound: {
+    code: "404",
+    dialogueName: "Prof. Turing",
+    dialogue: "This route does not exist on the map. Shall we return to login?",
+    backToLogin: "BACK TO LOGIN",
+  },
   validation: {
     required: "Please fill in this field.",
     invalidEmail: "Invalid email. Check it and try again.",
