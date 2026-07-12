@@ -1,0 +1,23 @@
+.login-screen {
+  justify-content: center;
+  padding: 0;
+}
+
+.login-panel {
+  width: 470px;
+  margin-top: 18px;
+}
+
+.login-form-spacer {
+  height: 18px;
+}
+
+.login-forgot {
+  margin-top: -4px;
+  margin-bottom: 14px;
+  text-align: right;
+}
+
+.login-forgot .link {
+  white-space: nowrap;
+}

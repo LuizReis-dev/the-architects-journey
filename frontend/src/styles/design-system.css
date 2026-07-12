@@ -126,6 +126,38 @@ canvas {
   padding: 28px 0 0;
 }
 
+.language-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 40;
+  display: flex;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.45);
+}
+
+.language-toggle button {
+  padding: 8px 11px;
+  color: var(--txt-soft);
+  background: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+}
+
+.language-toggle button.on {
+  color: var(--txt-on-fire);
+  background: linear-gradient(180deg, var(--fire-2), var(--fire-4));
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.language-toggle button + button {
+  border-left: 3px solid var(--ink);
+}
+
 /* ---- Typography --------------------------------------------- */
 .logo {
   margin-bottom: 6px;
@@ -275,6 +307,8 @@ canvas {
 
 .field-label .reveal {
   color: var(--link);
+  background: none;
+  border: none;
   cursor: pointer;
   font-family: "Pixelify Sans", monospace;
   font-size: 14px;
