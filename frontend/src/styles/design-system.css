@@ -482,6 +482,69 @@ canvas {
   background: repeating-linear-gradient(90deg, #d9cca8 0 4px, transparent 4px 8px);
 }
 
+/* ---- Character picker -------------------------------------- */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 4px 0 6px;
+}
+
+.character-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 6px 6px;
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: inset 0 0 0 2px #e9dfc4;
+  cursor: pointer;
+  transition: transform 0.08s steps(1);
+}
+
+.character-card:hover {
+  transform: translateY(-3px);
+}
+
+.character-card .pointer {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 12px solid var(--fire-3);
+  border-right: 9px solid transparent;
+  border-left: 9px solid transparent;
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: bob 0.7s steps(2) infinite;
+}
+
+.character-card.selected {
+  background: #fff4df;
+  border-color: var(--fire-3);
+  box-shadow:
+    inset 0 0 0 2px #ffd79a,
+    0 5px 0 0 var(--ink);
+}
+
+.character-card.selected .pointer {
+  opacity: 1;
+}
+
+.character-card .plate {
+  color: var(--txt-soft);
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+}
+
+.character-card.selected .plate {
+  color: var(--fire-4);
+}
+
 /* ---- Feedback ---------------------------------------------- */
 .toast {
   position: absolute;
@@ -533,6 +596,12 @@ canvas {
   from {
     opacity: 0;
     transform: translate(-50%, 14px);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateX(-50%) translateY(3px);
   }
 }
 

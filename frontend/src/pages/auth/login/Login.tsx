@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../../../components/button/Button";
 import FormInput from "../../../components/form-input/FormInput";
 import { useI18n, type Language, type Translation } from "../../../i18n/I18nProvider";
@@ -120,9 +121,9 @@ export default function Login() {
 
             <div className="row-link">
               <span>{t.login.noAccount}</span>
-              <button className="link" type="button">
+              <Link className="link" to="/signup">
                 {t.login.createCharacter}
-              </button>
+              </Link>
             </div>
           </form>
         </div>
