@@ -92,22 +92,22 @@ function palette(
 
 export const characters: PixelCharacter[] = [
   {
-    id: "dev_m1",
+    id: "1",
     map: MAP_SHORT,
     palette: palette("#f2c9a0", "#d9a577", "#6d4527", "#503217", "#b56a5a", "#2f6fb0", "#22538a"),
   },
   {
-    id: "dev_m2",
+    id: "2",
     map: MAP_SHORT,
     palette: palette("#7c4e30", "#603a23", "#1a130f", "#0f0a07", "#5a3522", "#2f9061", "#216947"),
   },
   {
-    id: "dev_f1",
+    id: "3",
     map: MAP_LONG,
     palette: palette("#f2c9a0", "#d9a577", "#b46a2c", "#8a4d1d", "#b56a5a", "#c45397", "#993f74"),
   },
   {
-    id: "dev_f2",
+    id: "4",
     map: MAP_LONG,
     palette: palette("#71462a", "#57341f", "#171210", "#0c0907", "#5a3522", "#6c4bb5", "#503488"),
   },
