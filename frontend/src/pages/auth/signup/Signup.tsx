@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../../components/button/Button";
 import FormInput from "../../../components/form-input/FormInput";
-import { useI18n, type Language, type Translation } from "../../../i18n/I18nProvider";
+import { useI18n, type Language, type Translation } from "../../../i18n/i18n";
 import StageLayout from "../../../layouts/stage-layout/StageLayout";
 import { characters, professor } from "../../../shared/characters";
 import { PixelSprite } from "../../../shared/pixel-sprite";
