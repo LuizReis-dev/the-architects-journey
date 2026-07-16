@@ -45,11 +45,17 @@ const pt = {
     signIn: "FAZER LOGIN",
     validationLog: "validacao do formulario de cadastro",
   },
+  notFound: {
+    code: "404",
+    dialogueName: "Prof. Turing",
+    dialogue: "Essa rota nao existe no mapa. Vamos voltar para o login?",
+    backToLogin: "VOLTAR AO LOGIN",
+  },
   validation: {
     required: "Preencha este campo.",
     invalidEmail: "Email invalido. Confira e tente de novo.",
     shortPassword: "A senha precisa de ao menos 6 caracteres.",
   },
-};
+}
 
-export default pt;
+export default pt
