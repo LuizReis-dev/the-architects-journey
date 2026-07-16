@@ -1,0 +1,612 @@
+/* ============================================================
+   Jornada do Arquiteto - design system base
+   ============================================================ */
+
+:root {
+  --fire-1: #ffe27a;
+  --fire-2: #ff9d2e;
+  --fire-3: #ef4a2c;
+  --fire-4: #c41f24;
+
+  --ink: #241a2e;
+  --ink-soft: #463a57;
+
+  --paper: #f7f1de;
+  --paper-line: #e7dcc0;
+  --frame-lt: #f4e9cf;
+  --frame-md: #c79a55;
+  --frame-dk: #8a5a2b;
+
+  --bg-0: #120b1c;
+  --bg-1: #1d1330;
+  --bg-glow: #3a1f4d;
+
+  --txt: #2c2236;
+  --txt-soft: #6a5d52;
+  --txt-on-fire: #fff4d6;
+
+  --ok: #2f9061;
+  --warn: #d98a2b;
+  --err: #c8392f;
+  --err-bg: #f6dcd6;
+  --link: #1f6fb0;
+
+  --shadow-hard: 0 5px 0 0 rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: #000;
+  color: var(--txt);
+  font-family: "Pixelify Sans", monospace;
+  -webkit-font-smoothing: none;
+  image-rendering: pixelated;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img,
+canvas {
+  image-rendering: pixelated;
+}
+
+/* ---- Stage / scaler 16:9 ------------------------------------ */
+.stage-wrap {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: #000;
+}
+
+.stage {
+  position: relative;
+  width: 1280px;
+  height: 720px;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      120% 90% at 50% 18%,
+      var(--bg-glow) 0%,
+      var(--bg-1) 42%,
+      var(--bg-0) 100%
+    );
+  transform-origin: center center;
+}
+
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background:
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.16) 0 2px, transparent 2px 4px),
+    radial-gradient(130% 120% at 50% 50%, transparent 58%, rgba(0, 0, 0, 0.55) 100%);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 0 0;
+}
+
+.language-toggle {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  z-index: 40;
+  display: flex;
+  overflow: hidden;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  box-shadow: 0 4px 0 0 rgba(0, 0, 0, 0.45);
+}
+
+.language-toggle button {
+  padding: 8px 11px;
+  color: var(--txt-soft);
+  background: var(--paper);
+  border: none;
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+}
+
+.language-toggle button.on {
+  color: var(--txt-on-fire);
+  background: linear-gradient(180deg, var(--fire-2), var(--fire-4));
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+}
+
+.language-toggle button + button {
+  border-left: 3px solid var(--ink);
+}
+
+/* ---- Typography --------------------------------------------- */
+.logo {
+  margin-bottom: 6px;
+  text-align: center;
+  user-select: none;
+}
+
+.logo-emblem {
+  display: inline-grid;
+  place-items: center;
+  margin-bottom: 12px;
+}
+
+.logo h1 {
+  background: linear-gradient(
+    180deg,
+    var(--fire-1) 0%,
+    var(--fire-2) 46%,
+    var(--fire-3) 74%,
+    var(--fire-4) 100%
+  );
+  background-clip: text;
+  color: transparent;
+  filter:
+    drop-shadow(3px 0 0 var(--ink)) drop-shadow(-3px 0 0 var(--ink))
+    drop-shadow(0 3px 0 var(--ink)) drop-shadow(0 -3px 0 var(--ink))
+    drop-shadow(5px 6px 0 rgba(0, 0, 0, 0.5));
+  font-family: "Press Start 2P", monospace;
+  font-size: 40px;
+  letter-spacing: 1px;
+  line-height: 1.18;
+  -webkit-background-clip: text;
+}
+
+.logo .sub {
+  margin-top: 16px;
+  color: var(--fire-1);
+  font-family: "Press Start 2P", monospace;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 var(--ink);
+}
+
+.eyebrow {
+  color: var(--fire-4);
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.win-title {
+  margin-top: 8px;
+  color: var(--txt);
+  font-family: "Press Start 2P", monospace;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+}
+
+/* ---- Window / dialogue -------------------------------------- */
+.gb-window {
+  position: relative;
+  padding: 16px 22px;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 3px var(--frame-lt),
+    inset 0 0 0 6px var(--frame-md),
+    inset 0 0 0 9px var(--paper-line),
+    0 7px 0 0 rgba(0, 0, 0, 0.5),
+    0 0 0 2px var(--ink);
+}
+
+.gb-window > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dialogue {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 3px var(--frame-lt),
+    inset 0 0 0 6px var(--link),
+    0 6px 0 0 rgba(0, 0, 0, 0.5),
+    0 0 0 2px var(--ink);
+}
+
+.dialogue .who {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 4px;
+  background: #eef3fb;
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+}
+
+.dialogue p {
+  color: var(--txt);
+  font-size: 19px;
+  line-height: 1.32;
+  text-wrap: pretty;
+}
+
+.dialogue .name-tag {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--link);
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+}
+
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 4px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 7px solid var(--fire-4);
+  animation: blink 0.8s steps(1) infinite;
+  vertical-align: middle;
+}
+
+/* ---- Forms -------------------------------------------------- */
+.field {
+  margin-bottom: 10px;
+}
+
+.field-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 7px;
+  color: var(--txt-soft);
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  letter-spacing: 0.5px;
+}
+
+.field-label .reveal {
+  color: var(--link);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Pixelify Sans", monospace;
+  font-size: 14px;
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+.field-input {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  height: 46px;
+  padding: 0 12px;
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 7px;
+  box-shadow: inset 0 0 0 2px #e9dfc4;
+  transition:
+    box-shadow 0.12s steps(2),
+    border-color 0.12s steps(2);
+}
+
+.field-input:focus-within {
+  border-color: var(--fire-3);
+  box-shadow:
+    inset 0 0 0 2px #ffe2b0,
+    0 0 0 3px rgba(239, 74, 44, 0.25);
+}
+
+.field-input.invalid {
+  border-color: var(--err);
+  box-shadow: inset 0 0 0 2px var(--err-bg);
+}
+
+.field-input .ic {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 18px;
+  color: var(--frame-dk);
+  font-size: 18px;
+}
+
+.field-input input {
+  flex: 1;
+  height: 100%;
+  color: var(--txt);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: "Pixelify Sans", monospace;
+  font-size: 19px;
+}
+
+.field-input input::placeholder {
+  color: #b6a98c;
+}
+
+.field-err {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 0;
+  margin-top: 6px;
+  color: var(--err);
+  font-size: 15px;
+}
+
+.field-err ion-icon {
+  font-size: 15px;
+}
+
+/* ---- Button ------------------------------------------------- */
+.btn {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 18px;
+  color: var(--txt-on-fire);
+  background: linear-gradient(180deg, var(--fire-2) 0%, var(--fire-3) 55%, var(--fire-4) 100%);
+  border: 3px solid var(--ink);
+  border-radius: 8px;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.4),
+    inset 0 -3px 0 rgba(0, 0, 0, 0.28),
+    0 5px 0 0 var(--ink);
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.35);
+  transition:
+    transform 0.06s steps(1),
+    box-shadow 0.06s steps(1);
+}
+
+.btn:hover {
+  filter: brightness(1.06);
+}
+
+.btn:active {
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.28),
+    0 1px 0 0 var(--ink);
+  transform: translateY(4px);
+}
+
+.btn .arrow {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.btn.busy {
+  opacity: 0.85;
+  pointer-events: none;
+}
+
+/* ---- Links / separators ------------------------------------ */
+.row-link {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+  color: var(--txt-soft);
+  font-size: 17px;
+}
+
+.link {
+  color: var(--link);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: "Press Start 2P", monospace;
+  font-size: 10px;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: var(--fire-4);
+}
+
+.link.subtle {
+  color: var(--txt-soft);
+  font-family: "Pixelify Sans", monospace;
+  font-size: 16px;
+}
+
+.link.subtle:hover {
+  color: var(--fire-4);
+}
+
+.sep {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 16px 0 14px;
+  color: #cbbf9f;
+}
+
+.sep::before,
+.sep::after {
+  content: "";
+  flex: 1;
+  height: 3px;
+  background: repeating-linear-gradient(90deg, #d9cca8 0 4px, transparent 4px 8px);
+}
+
+/* ---- Character picker -------------------------------------- */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 4px 0 6px;
+}
+
+.character-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  padding: 8px 6px 6px;
+  background: #fffdf6;
+  border: 3px solid var(--ink);
+  border-radius: 9px;
+  box-shadow: inset 0 0 0 2px #e9dfc4;
+  cursor: pointer;
+  transition: transform 0.08s steps(1);
+}
+
+.character-card:hover {
+  transform: translateY(-3px);
+}
+
+.character-card .pointer {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 12px solid var(--fire-3);
+  border-right: 9px solid transparent;
+  border-left: 9px solid transparent;
+  opacity: 0;
+  transform: translateX(-50%);
+  animation: bob 0.7s steps(2) infinite;
+}
+
+.character-card.selected {
+  background: #fff4df;
+  border-color: var(--fire-3);
+  box-shadow:
+    inset 0 0 0 2px #ffd79a,
+    0 5px 0 0 var(--ink);
+}
+
+.character-card.selected .pointer {
+  opacity: 1;
+}
+
+.character-card .plate {
+  color: var(--txt-soft);
+  font-family: "Press Start 2P", monospace;
+  font-size: 8px;
+}
+
+.character-card.selected .plate {
+  color: var(--fire-4);
+}
+
+/* ---- Feedback ---------------------------------------------- */
+.toast {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  z-index: 50;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 12px 18px;
+  color: var(--txt);
+  background: var(--paper);
+  border: 4px solid var(--ink);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 3px var(--frame-lt),
+    inset 0 0 0 6px var(--ok),
+    0 6px 0 0 rgba(0, 0, 0, 0.5);
+  font-size: 18px;
+  transform: translateX(-50%);
+  animation: toast-in 0.18s steps(3);
+}
+
+.toast ion-icon {
+  color: var(--ok);
+  font-size: 20px;
+}
+
+.hint {
+  margin-top: 14px;
+  color: #6b5c84;
+  font-family: "Press Start 2P", monospace;
+  font-size: 9px;
+  letter-spacing: 1px;
+  animation: blink 1.1s steps(1) infinite;
+}
+
+.spr.bob {
+  animation: spr-bob 0.6s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 14px);
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateX(-50%) translateY(3px);
+  }
+}
+
+@keyframes spr-bob {
+  50% {
+    transform: translateY(-3px);
+  }
+}
