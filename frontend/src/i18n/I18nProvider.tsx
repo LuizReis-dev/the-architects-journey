@@ -44,7 +44,7 @@ export function I18nProvider({ children }: I18nProviderProps) {
       setLanguage,
       t: translations[language],
     }),
-    [language],
+    [language, setLanguage],
   )
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>
