@@ -1,4 +1,4 @@
-import type pt from "./pt";
+import type pt from "./pt"
 
 const en = {
   language: {
@@ -58,6 +58,6 @@ const en = {
     invalidEmail: "Invalid email. Check it and try again.",
     shortPassword: "Password needs at least 6 characters.",
   },
-} satisfies typeof pt;
+} satisfies typeof pt
 
-export default en;
+export default en

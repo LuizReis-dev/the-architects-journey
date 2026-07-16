@@ -56,6 +56,6 @@ const pt = {
     invalidEmail: "Email invalido. Confira e tente de novo.",
     shortPassword: "A senha precisa de ao menos 6 caracteres.",
   },
-};
+}
 
-export default pt;
+export default pt
