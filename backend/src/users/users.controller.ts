@@ -14,16 +14,20 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger'
+import { Auth } from '../shared/decorators/auth.decorator'
+import { Public } from '../shared/decorators/public.decorator'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UserResponseDto } from './dto/user-response.dto'
 import { UsersService } from './users.service'
 
 @ApiTags('users')
+@Auth()
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
+  @Public()
   @Post()
   @ApiOperation({ summary: 'Create user' })
   @ApiCreatedResponse({ type: UserResponseDto })
