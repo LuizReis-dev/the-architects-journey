@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument } from 'mongoose'
 import { baseSchemaOptions } from 'src/shared/utils/schema-options'
+import { AuthProvider, AuthProviderSchema } from './auth-provider.schema'
 
 export type UserDocument = HydratedDocument<User>
 
@@ -12,8 +13,11 @@ export class User {
   @Prop({ required: true })
   name: string
 
-  @Prop({ required: true })
-  password: string
+  @Prop()
+  password?: string
+
+  @Prop({ type: [AuthProviderSchema], default: [] })
+  providers: AuthProvider[]
 
   @Prop({ enum: [1, 2, 3, 4] })
   character?: number

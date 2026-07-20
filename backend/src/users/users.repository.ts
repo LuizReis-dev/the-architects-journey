@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose'
+import { CreateOAuthUserDto } from './dto/create-oauth-user.dto'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
+import { AuthProviderName } from './schemas/auth-provider.schema'
 import { User, UserDocument } from './schemas/user.schema'
 
 @Injectable()
@@ -11,8 +13,48 @@ export class UsersRepository {
     @InjectModel(User.name) private readonly userModel: Model<UserDocument>,
   ) {}
 
-  create(data: CreateUserDto) {
-    return this.userModel.create(data)
+  create(data: CreateUserDto & { password: string }) {
+    return this.userModel.create({
+      ...data,
+      providers: [{ provider: AuthProviderName.LOCAL }],
+    })
+  }
+
+  async findOrCreateOAuthUser(data: CreateOAuthUserDto) {
+    const user = await this.findByEmail(data.email)
+
+    if (!user) {
+      return this.userModel.create({
+        email: data.email,
+        name: data.name,
+        providers: [
+          {
+            provider: data.provider,
+            providerId: data.providerId,
+          },
+        ],
+      })
+    }
+
+    if (!user.providers) {
+      user.providers = []
+    }
+
+    const alreadyLinked = user.providers.some(
+      (item) =>
+        item.provider === data.provider &&
+        item.providerId === data.providerId,
+    )
+
+    if (!alreadyLinked) {
+      user.providers.push({
+        provider: data.provider,
+        providerId: data.providerId,
+      })
+      await user.save()
+    }
+
+    return user
   }
 
   findAll() {

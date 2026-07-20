@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import * as bcrypt from 'bcrypt'
+import { CreateOAuthUserDto } from './dto/create-oauth-user.dto'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { UsersRepository } from './users.repository'
@@ -20,6 +21,10 @@ export class UsersService {
       ...createUserDto,
       password,
     })
+  }
+
+  findOrCreateOAuthUser(data: CreateOAuthUserDto) {
+    return this.usersRepository.findOrCreateOAuthUser(data)
   }
 
   findAll() {
