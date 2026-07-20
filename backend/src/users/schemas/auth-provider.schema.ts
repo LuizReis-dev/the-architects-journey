@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 export enum AuthProviderName {
   LOCAL = 'local',
   GOOGLE = 'google',
+  GITHUB = 'github',
 }
 
 @Schema({ _id: false })
