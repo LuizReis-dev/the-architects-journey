@@ -38,17 +38,20 @@ export class AuthService {
   async validateOAuthLogin(data: {
     email: string
     name: string
+    provider: AuthProviderName
     providerId: string
   }): Promise<AuthenticatedUserDto> {
     const user = await this.usersService.findOrCreateOAuthUser({
       email: data.email,
       name: data.name,
-      provider: AuthProviderName.GOOGLE,
+      provider: data.provider,
       providerId: data.providerId,
     })
 
     if (!user) {
-      throw new UnauthorizedException('Unable to authenticate with Google')
+      throw new UnauthorizedException(
+        `Unable to authenticate with ${data.provider}`,
+      )
     }
 
     return {

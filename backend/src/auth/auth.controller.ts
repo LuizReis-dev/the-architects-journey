@@ -19,6 +19,7 @@ import { AuthService } from './auth.service'
 import { AuthenticatedUserDto } from './dto/authenticated-user.dto'
 import { LoginResponseDto } from './dto/login-response.dto'
 import { LoginDto } from './dto/login.dto'
+import { GithubAuthGuard } from './guards/github-auth.guard'
 import { GoogleAuthGuard } from './guards/google-auth.guard'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 
@@ -54,6 +55,24 @@ export class AuthController {
   @ApiOperation({ summary: 'Google OAuth callback' })
   @ApiOkResponse({ type: LoginResponseDto })
   googleAuthCallback(@Request() req: { user: AuthenticatedUserDto }) {
+    return this.authService.login(req.user)
+  }
+
+  @Public()
+  @Get('github')
+  @UseGuards(GithubAuthGuard)
+  @ApiOperation({
+    summary: 'Start GitHub OAuth login',
+    description: 'Open this URL in the browser to authenticate with GitHub.',
+  })
+  githubAuth() {}
+
+  @Public()
+  @Get('github/callback')
+  @UseGuards(GithubAuthGuard)
+  @ApiOperation({ summary: 'GitHub OAuth callback' })
+  @ApiOkResponse({ type: LoginResponseDto })
+  githubAuthCallback(@Request() req: { user: AuthenticatedUserDto }) {
     return this.authService.login(req.user)
   }
 }
