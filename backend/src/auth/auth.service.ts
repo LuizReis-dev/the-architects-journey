@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, UnauthorizedException } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
+import { AuthProviderName } from '../users/schemas/auth-provider.schema'
 import { UsersService } from '../users/users.service'
 import { AuthenticatedUserDto } from './dto/authenticated-user.dto'
 
@@ -17,7 +18,7 @@ export class AuthService {
   ): Promise<AuthenticatedUserDto | null> {
     const user = await this.usersService.findByEmail(email)
 
-    if (!user) {
+    if (!user?.password) {
       return null
     }
 
@@ -25,6 +26,29 @@ export class AuthService {
 
     if (!isPasswordValid) {
       return null
+    }
+
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+    }
+  }
+
+  async validateOAuthLogin(data: {
+    email: string
+    name: string
+    providerId: string
+  }): Promise<AuthenticatedUserDto> {
+    const user = await this.usersService.findOrCreateOAuthUser({
+      email: data.email,
+      name: data.name,
+      provider: AuthProviderName.GOOGLE,
+      providerId: data.providerId,
+    })
+
+    if (!user) {
+      throw new UnauthorizedException('Unable to authenticate with Google')
     }
 
     return {

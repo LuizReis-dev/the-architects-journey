@@ -1,5 +1,6 @@
 import {
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -13,10 +14,12 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger'
+import { Public } from '../shared/decorators/public.decorator'
 import { AuthService } from './auth.service'
 import { AuthenticatedUserDto } from './dto/authenticated-user.dto'
 import { LoginResponseDto } from './dto/login-response.dto'
 import { LoginDto } from './dto/login.dto'
+import { GoogleAuthGuard } from './guards/google-auth.guard'
 import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @ApiTags('auth')
@@ -24,6 +27,7 @@ import { LocalAuthGuard } from './guards/local-auth.guard'
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @Public()
   @Post('login')
   @HttpCode(HttpStatus.OK)
   @UseGuards(LocalAuthGuard)
@@ -32,6 +36,24 @@ export class AuthController {
   @ApiOkResponse({ type: LoginResponseDto })
   @ApiUnauthorizedResponse({ description: 'Invalid credentials' })
   login(@Request() req: { user: AuthenticatedUserDto }) {
+    return this.authService.login(req.user)
+  }
+
+  @Public()
+  @Get('google')
+  @UseGuards(GoogleAuthGuard)
+  @ApiOperation({
+    summary: 'Start Google OAuth login',
+    description: 'Open this URL in the browser to authenticate with Google.',
+  })
+  googleAuth() {}
+
+  @Public()
+  @Get('google/callback')
+  @UseGuards(GoogleAuthGuard)
+  @ApiOperation({ summary: 'Google OAuth callback' })
+  @ApiOkResponse({ type: LoginResponseDto })
+  googleAuthCallback(@Request() req: { user: AuthenticatedUserDto }) {
     return this.authService.login(req.user)
   }
 }
